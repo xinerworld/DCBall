@@ -6,14 +6,12 @@ import com.xiner.dcball.field.FieldFoot;
 import com.xiner.dcball.field.FieldHeader;
 import com.xiner.dcball.util.LogX;
 import com.xiner.dcball.util.Screen;
-import com.xiner.game.util.LotteryManager;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.TextView;
 
 public class MainActivity extends Activity
 {
@@ -32,16 +30,42 @@ public class MainActivity extends Activity
 	private FieldFoot mFieldFoot;
 	
 	private Lottery mLottery;
-	
-	public Handler mHandler = new Handler()
+
+    public final int fLoadDate = 1;
+
+    public final int fLoadDateEnd = 2;
+
+    public final int fLoadDown = 3;
+
+    public final int fLoadDownEnd = 4;
+
+    public Handler mHandler = new Handler()
 	{
 		public void handleMessage(Message msg) 
 		{
-			
+			int w = msg.what;
+
+            switch (w)
+            {
+                case fLoadDate:
+                    initLayout();
+                    break;
+                case fLoadDateEnd:
+                    mFieldHeader.updataLottery();
+                    break;
+                case fLoadDown:
+                    mLottery.loadDown();
+                    break;
+                case fLoadDownEnd:
+                    mLottery.statistic();
+                    mLottery.exportXml();
+                    updataAll();
+                    break;
+            }
 		};
 	};
-	
-	@Override
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
@@ -51,6 +75,8 @@ public class MainActivity extends Activity
 		new Screen(this);
 		
 		init();
+
+        mHandler.sendEmptyMessage(fLoadDate);
 		
 		LogX.e(TAG, "onCreate end");
 	}
@@ -82,7 +108,7 @@ public class MainActivity extends Activity
 
 		initLayout();
 
-        mLottery = new Lottery(this);
+        //mLottery = new Lottery(this);
 
 		mFieldHeader = new FieldHeader(this, mViewHeader);
         mFieldContent = new FieldContent(this, mViewContent);
@@ -90,7 +116,7 @@ public class MainActivity extends Activity
 	}
 	
 	/**
-	 * load layout
+	 * loadLocalXML layout
 	 */
 	private void initLayout()
 	{
@@ -100,4 +126,9 @@ public class MainActivity extends Activity
 		
 		mViewFoot = findViewById(R.id.main_foot_relative);
 	}
+
+    private void updataAll()
+    {
+        mFieldHeader.updataLottery();
+    }
 }
