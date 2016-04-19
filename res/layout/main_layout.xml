@@ -1,7 +1,45 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-    
-    
+
+    <RelativeLayout
+        android:id="@+id/main_header_relative"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
+
+        <include layout="@layout/main_header" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/main_show_content"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/main_foot_relative"
+        android:layout_below="@id/main_header_relative"
+        android:background="@color/color_green" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" >
+        </android.support.v4.view.ViewPager>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/main_foot_relative"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/trans_red" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/null_string"
+            android:textColor="@color/color_black"
+            android:textSize="16sp" />
+    </RelativeLayout>
 
 </RelativeLayout>
