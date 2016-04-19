@@ -52,6 +52,7 @@ public class MainActivity extends Activity
                     break;
                 case fLoadDateEnd:
                     mFieldHeader.updataLottery();
+                    mFieldContent.updataLottery();
                     break;
                 case fLoadDown:
                     mLottery.loadDown();
@@ -76,7 +77,7 @@ public class MainActivity extends Activity
 		
 		init();
 
-        mHandler.sendEmptyMessage(fLoadDate);
+        mHandler.sendEmptyMessageDelayed(fLoadDate, 100);
 		
 		LogX.e(TAG, "onCreate end");
 	}
